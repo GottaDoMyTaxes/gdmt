@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yelp Reviews</title>
+<style>
+  .yelp-carousel-wrapper {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 20px 0;
+  }
+
+  .yelp-carousel {
+    display: flex;
+    overflow: hidden;
+    scroll-behavior: smooth;
+  }
+
+  .review-card {
+    flex: 0 0 calc(33.333% - 20px);
+    box-sizing: border-box;
+    background: #FEFAF6;
+    margin: 0 10px;
+    padding: 20px 18px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  }
+
+  .review-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .review-header img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .review-header div strong {
+    display: block;
+    font-size: 1rem;
+    color: #222;
+  }
+
+  .review-header div small {
+    color: #666;
+  }
+
+  .review-header div small a {
+    color: #d32323;
+    text-decoration: none;
+  }
+
+  .review-header div small a:hover {
+    text-decoration: underline;
+  }
+
+  .review-stars {
+    display: flex;
+    margin: 10px 0;
+  }
+
+  .review-card p {
+    margin-top: 8px;
+    margin-bottom: 0;
+    color: #333;
+    line-height: 1.55;
+  }
+
+  .review-card a.read-more {
+    display: inline-block;
+    margin-top: 2px;
+    color: #bbb; /* lighter gray */
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-decoration: none;
+  }
+
+  .review-card a.read-more:hover {
+    text-decoration: underline;
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 14px;
+    gap: 5px;
+  }
+
+  .carousel-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ccc;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .carousel-dots span.active {
+    background-color: #444;
+    transform: scale(1.2);
+  }
+
+  @media (max-width: 900px) {
+    .review-card { flex: 0 0 calc(50% - 20px); }
+  }
+
+  @media (max-width: 600px) {
+    .review-card { flex: 0 0 calc(100% - 20px); }
+  }
+</style>
+</head>
+<body>
+  <div class="yelp-carousel-wrapper">
+    <div class="yelp-carousel" id="yelp-carousel"></div>
+    <div class="carousel-dots" id="carousel-dots"></div>
+  </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const carousel = document.getElementById("yelp-carousel");
+  const dotsContainer = document.getElementById("carousel-dots");
+  const baseURL = "https://www.yelp.com/biz/gotta-do-my-taxes-encino?hrid=";
+
+  const reviews = [
+    { name: "Andrea F.", date: "Oct 15, 2025", rating: 5,
+      text: "I've been using GDMT for years - they're the best! Excellent service. Fast and prompt communications. They make filing easy and a little less painful!",
+      hrid: "2K_cYQ_sXuXnyW-lUmRZSQ" },
+    { name: "Alynn D.", date: "Oct 7, 2025", rating: 5,
+      text: "Rod and his team are THE ABSOLUTE BEST. GDMT has been doing my taxes for YEARS and never disappoints. They're amazing at their jobs, fairly priced, kind and dedicated. They're also comedians and will have you deep belly laughing - which is truly a rare and pleasant experience from a CPA!",
+      img: "https://s3-media0.fl.yelpcdn.com/photo/C9HkTgefzVQaY_cI256I2g/60s.jpg",
+      hrid: "fhmm-8cOLHrlax2ZZPlO5w" },
+    { name: "Kathleen H.", date: "Sep 30, 2025", rating: 5,
+      text: "Gotta Do My Taxes has been doing my taxes for about ten years, and I am so glad I found them. Part of my income is as an independent contractor, and that is why I chose them. This is one of their specialities, and they know just what things you can deduct.",
+      hrid: "uzxBjx3sd_xK1VUtaVA8sA" },
+    { name: "Cindy C.", date: "Apr 12, 2025", rating: 5,
+      text: "David was extremely knowledgeable and patient despite all our questions. He was easy to work with and he made us feel at ease. I can't say enough great things.",
+      hrid: "eh6gjl1JRvlZlyBsTOwkrQ" },
+    { name: "Christina L.", date: "Feb 28, 2025", rating: 5,
+      text: "David and the folks at Gotta Do My Taxes are always so helpful! I am so grateful to have people I trust for taxes the past several years. Highly recommend!",
+      img: "https://s3-media0.fl.yelpcdn.com/photo/uAtajNCPWn6OHDB_uR7hew/60s.jpg",
+      hrid: "Z-SmMM0YkarpHydiFzS19g" },
+    { name: "K9 Toddlers Animal Training T.", date: "Feb 24, 2025", rating: 5,
+      text: "They've been doing my taxes for SEVERAL years and I honestly couldn't be happier!! They're super polite, kind, accommodating and efficient in every way -- their professionalism is just outstanding! Highly recommend it!",
+      img: "https://s3-media0.fl.yelpcdn.com/photo/im_biRgIPuwaau_BIEVZTQ/60s.jpg",
+      hrid: "gcdAJ4uB7o5vziwyWLHk2g" },
+    { name: "Peggy V.", date: "Feb 11, 2025", rating: 5,
+      text: "Gotta Do My Taxes have been doing my taxes for over 4 years now. They are really on top of things. I am really happy with them.",
+      hrid: "gvyDTU6r0j7e5LRygSr9hQ" },
+    { name: "Jimmy T.", date: "Feb 6, 2025", rating: 5,
+      text: "They've made this process very easy and walk you through the challenging questions. They are quick to respond and provide clear answers. Highly recommend for a good price.",
+      hrid: "kBJJQD5t-a4404Y1Kseccw" }
+  ];
+
+  const defaultImage = "https://s3-media0.fl.yelpcdn.com/assets/public/default_user_avatar_64x64_v2.yji-19e0a8ff85b15f4bbd79.png";
+
+  const starSVG = `
+    <svg width="20" height="20" viewBox="0 0 20 20" style="margin-right:3px;">
+      <path fill="rgba(251,67,60,1)" d="M0 4C0 1.8 1.8 0 4 0H10V20H4C1.8 20 0 18.2 0 16V4Z"></path>
+      <path fill="rgba(251,67,60,1)" d="M20 4C20 1.8 18.2 0 16 0H10V20H16C18.2 20 20 18.2 20 16V4Z"></path>
+      <path fill="white" fill-rule="evenodd" clip-rule="evenodd"
+        d="M10 13.37L12.6 14.71c.14.07.3.09.46.06.41-.07.69-.46.63-.87l-.47-2.88 2.07-2.05c.11-.11.18-.26.2-.42.06-.41-.21-.79-.62-.85l-2.89-.44L10.67 4.66c-.07-.14-.19-.26-.33-.33-.37-.18-.82-.02-1 .33L8.02 7.27 5.13 7.71c-.16.02-.31.09-.42.2-.29.29-.29.76.01 1.07l2.07 2.05-.47 2.88c-.03.16-.01.33.07.48.18.36.63.49 1 .3L10 13.37z"></path>
+    </svg>`;
+
+  // Render reviews
+  reviews.forEach(r => {
+    const card = document.createElement("div");
+    card.className = "review-card";
+    const reviewURL = `${baseURL}${r.hrid}`;
+    const header = `
+      <div class="review-header">
+        <img src="${r.img || defaultImage}" alt="${r.name}" />
+        <div>
+          <strong>${r.name}</strong>
+          <small>${r.date} on <a href="${reviewURL}" target="_blank">Yelp</a></small>
+        </div>
+      </div>`;
+    const quoteLength = 75;
+    const stars = `<div class="review-stars">${Array.from({ length: r.rating }).map(() => starSVG).join("")}</div>`;
+    const truncated = r.text.length > quoteLength ? r.text.slice(0, quoteLength).trim() + "..." : r.text;
+    const quote = `<p>${truncated}</p>`;
+    const link = r.text.length > quoteLength ? `<a href="${reviewURL}" target="_blank" class="read-more">Read more</a>` : "";
+    card.innerHTML = header + stars + quote + link;
+    carousel.appendChild(card);
+  });
+
+  // Carousel logic
+  const getVisible = () => (window.innerWidth < 600 ? 1 : window.innerWidth < 900 ? 2 : 3);
+  let currentSlide = 0;
+  let autoTimer;
+
+  function updateCarousel() {
+    const visible = getVisible();
+    const cardWidth = carousel.querySelector(".review-card").offsetWidth + 20; // account for margins
+    const totalSlides = Math.ceil(reviews.length / visible);
+
+    // Create dots
+    dotsContainer.innerHTML = "";
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement("span");
+      if (i === 0) dot.classList.add("active");
+      dot.addEventListener("click", () => goToSlide(i, visible, cardWidth));
+      dotsContainer.appendChild(dot);
+    }
+
+    function goToSlide(index) {
+      carousel.scrollTo({ left: index * cardWidth * visible, behavior: "smooth" });
+      dotsContainer.querySelectorAll("span").forEach((d, i) => d.classList.toggle("active", i === index));
+      currentSlide = index;
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      goToSlide(currentSlide);
+    }
+
+    clearInterval(autoTimer);
+    autoTimer = setInterval(nextSlide, 5000);
+
+    carousel.addEventListener("mouseenter", () => clearInterval(autoTimer));
+    carousel.addEventListener("mouseleave", () => (autoTimer = setInterval(nextSlide, 5000)));
+  }
+
+  updateCarousel();
+  window.addEventListener("resize", updateCarousel);
+});
+</script>
+</body>
+</html>

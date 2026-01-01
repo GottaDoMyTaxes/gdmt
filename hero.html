@@ -36,7 +36,11 @@
 
   <style>
     html, body {
-      background: #F8EDE0;
+      background: #F8EDE0 !important;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
     }
     .caret::after {
       content: "";
@@ -57,18 +61,33 @@
 <body class="antialiased bg-white">
 
   <!-- HERO HEADLINE SECTION -->
-<section class="min-h-screen px-6 py-16" style="background:#F8EDE0">
-    <div class="max-w-5xl">
-        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight tracking-tight text-brand-900">
-            File confidently with
-            <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-700 via-brand-600 to-accent-500">
+<section
+  class="px-6 py-12 flex items-center"
+  style="background:#F8EDE0; height:325px"
+>
+  <div class="max-w-5xl">
+    <h1
+      class="font-display text-4xl sm:text-5xl lg:text-6xl
+             font-semibold leading-tight tracking-tight
+             text-brand-900 max-w-[22ch]"
+    >
+      File confidently with
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-700 via-brand-600 to-accent-500">
         expert tax prep
       </span>
-            and <span id="typed" class="caret">peace of mind</span>
-        </h1>
-        <p class="mt-5 text-brand-700/90 max-w-xl">All 50 states • Individuals & small businesses • Transparent flat‑fee quotes. We explain everything in plain language—no jargon, no surprises.</p>
-    </div>
+      and
+      <span class="inline-block min-w-[13ch] whitespace-nowrap">
+        <span id="typed" class="caret">peace of mind</span>
+      </span>
+    </h1>
+
+    <p class="mt-4 text-brand-700/90 max-w-xl text-base sm:text-lg leading-snug">
+      All 50 states • Individuals & small businesses • Transparent flat-fee quotes.
+      We explain everything in plain language—no jargon, no surprises.
+    </p>
+  </div>
 </section>
+
 
   <!-- Typewriter Script -->
   <script>

@@ -3,33 +3,34 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
     <style>
-        :root{
-            --ring: rgba(14,107,91,.20);
-            --accent: #c9a34c;
-            --shadow: 0 10px 34px rgba(11,61,53,.14);
-            --brand: #0e6b5b;
-        }
-        body{ margin:0; font-family:sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; background:#FEFAF6; }
-        .stage{ position:relative; width:min(92vw,560px); aspect-ratio:1/1; }
-        .center{ position:absolute; inset:50%; transform:translate(-50%,-50%); width:150px; height:150px; border-radius:9999px; background:#fff; border:2px solid var(--ring); box-shadow:var(--shadow); display:grid; place-items:center; z-index:2 }
-        .center img{ width:108px; height:108px; object-fit:contain }
-        .guide-ring{ position:absolute; inset:50%; transform:translate(-50%,-50%); width:420px; height:420px; border-radius:9999px; border:2px dashed var(--ring) }
-        .orbit{ position:absolute; inset:0; list-style:none; margin:0; padding:0; transform-origin:50% 50%; animation: spin 28s linear infinite }
-        @keyframes spin{ to{ transform: rotate(360deg) } }
-        .orbit li{ --n:8; --i:0; --r:210px; position:absolute; left:50%; top:50%; width:90px; height:90px; margin:-45px; display:flex; align-items:center; justify-content:center; transform: rotate(calc(360deg/var(--n)*var(--i))) translate(var(--r)) rotate(calc(-360deg/var(--n)*var(--i))) }
+        body { background: #FEFAF6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .stage { position: relative; width: 100%; max-width: 400px; height: 400px; margin: auto; }
+        .center { position: absolute; inset: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; border-radius: 9999px; background: #fff; border: 2px solid rgba(14,107,91,.2); box-shadow: 0 10px 34px rgba(11,61,53,.14); display: grid; place-items: center; z-index: 2; }
+        .center img { width: 86px; height: 86px; object-fit: contain; }
+        .guide-ring { position: absolute; inset: 50%; transform: translate(-50%, -50%); width: 320px; height: 320px; border-radius: 9999px; border: 2px dashed rgba(14,107,91,.2); }
+        .orbit { position: absolute; inset: 0; list-style: none; margin: 0; padding: 0; transform-origin: 50% 50%; animation: spin 28s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .orbit li { --n:8; --i:0; --r:160px; position: absolute; left: 50%; top: 50%; width: 72px; height: 72px; margin: -36px; display: flex; align-items: center; justify-content: center; transform: rotate(calc(360deg/var(--n)*var(--i))) translate(var(--r)) rotate(calc(-360deg/var(--n)*var(--i))); }
         .orbit li:nth-child(1){ --i:0 } .orbit li:nth-child(2){ --i:1 } .orbit li:nth-child(3){ --i:2 } .orbit li:nth-child(4){ --i:3 }
         .orbit li:nth-child(5){ --i:4 } .orbit li:nth-child(6){ --i:5 } .orbit li:nth-child(7){ --i:6 } .orbit li:nth-child(8){ --i:7 }
-        @keyframes spinRev{ to{ transform:rotate(-360deg) } }
-        .node{ width:76px; height:76px; border-radius:9999px; background:linear-gradient(180deg,#fff,#f8fafc); border:1px solid #e5e7eb; box-shadow:var(--shadow); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; animation: spinRev 28s linear infinite; transform-origin:center; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease }
-        .node:hover{ transform:scale(1.05); box-shadow:0 12px 30px rgba(15,23,42,.12); border-color:#dbe3ef }
-        .node .lbl{ font-size:12px; font-weight:600; color:#0b3d35 }
-        .node .sub{ font-size:10px; color:#5b6b66 }
-        @media (max-width:576px){ .center{ width:120px; height:120px } .center img{ width:86px; height:86px } .guide-ring{ width:320px; height:320px } .orbit li{ width:78px; height:78px; margin:-39px; --r:170px } .node{ width:68px; height:68px } .node .lbl{ font-size:11px } .node .sub{ display:none } }
+        .node { width: 72px; height: 72px; border-radius: 9999px; background: linear-gradient(180deg,#fff,#f8fafc); border:1px solid #e5e7eb; box-shadow:0 10px 34px rgba(11,61,53,.14); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; animation: spinRev 28s linear infinite; transform-origin:center; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+        .node:hover { transform: scale(1.05); box-shadow: 0 12px 30px rgba(15,23,42,.12); border-color: #dbe3ef; }
+        .node .lbl { font-size: 12px; font-weight: 600; color: #0b3d35; }
+        .node .sub { font-size: 10px; color: #5b6b66; }
+        @keyframes spinRev { to { transform: rotate(-360deg); } }
+        @media (prefers-reduced-motion: reduce){ .orbit, .node{ animation:none } }
     </style>
 </head>
 <body>
+
 <section class="stage" aria-label="GDMT services orbit">
     <div class="center" aria-hidden="true">
         <img src="https://images.squarespace-cdn.com/content/v1/68e6d86b1232a756b27dbef9/9da7b8f9-e488-4d97-b767-c4bd59381b46/GDMT_Logo.png" alt="GDMT logo"/>
@@ -46,5 +47,6 @@
         <li><div class="node" tabindex="0" aria-label="Advisory, real estate"><i class="bi bi-briefcase text-brand-800 text-[18px]"></i><div class="lbl">Advisory</div><div class="sub">R.E.</div></div></li>
     </ul>
 </section>
+
 </body>
 </html>

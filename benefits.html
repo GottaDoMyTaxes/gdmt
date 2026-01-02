@@ -11,42 +11,47 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
 
     <style>
-        body { background: #FEFAF6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .stage { position: relative; width: 100%; max-width: 400px; height: 400px; margin: auto; }
-        .center { position: absolute; inset: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; border-radius: 9999px; background: #fff; border: 2px solid rgba(14,107,91,.2); box-shadow: 0 10px 34px rgba(11,61,53,.14); display: grid; place-items: center; z-index: 2; }
-        .center img { width: 86px; height: 86px; object-fit: contain; }
-        .guide-ring { position: absolute; inset: 50%; transform: translate(-50%, -50%); width: 320px; height: 320px; border-radius: 9999px; border: 2px dashed rgba(14,107,91,.2); }
-        .orbit { position: absolute; inset: 0; list-style: none; margin: 0; padding: 0; transform-origin: 50% 50%; animation: spin 28s linear infinite; }
+        .stage { position: relative; aspect-ratio: 1/1; }
+        .center { position: absolute; inset: 50%; transform: translate(-50%,-50%); border-radius: 50%; background:#fff; border:2px solid rgba(14,107,91,.2); display:grid; place-items:center; z-index:2; box-shadow:0 10px 34px rgba(11,61,53,.14); }
+        .center img { width:80px; height:80px; object-fit:contain; }
+        .guide-ring { position:absolute; inset:50%; transform:translate(-50%,-50%); border-radius:50%; border:2px dashed rgba(14,107,91,.2); }
+        .orbit { position:absolute; inset:0; list-style:none; margin:0; padding:0; transform-origin:50% 50%; animation: spin 28s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .orbit li { --n:8; --i:0; --r:160px; position: absolute; left: 50%; top: 50%; width: 72px; height: 72px; margin: -36px; display: flex; align-items: center; justify-content: center; transform: rotate(calc(360deg/var(--n)*var(--i))) translate(var(--r)) rotate(calc(-360deg/var(--n)*var(--i))); }
-        .orbit li:nth-child(1){ --i:0 } .orbit li:nth-child(2){ --i:1 } .orbit li:nth-child(3){ --i:2 } .orbit li:nth-child(4){ --i:3 }
-        .orbit li:nth-child(5){ --i:4 } .orbit li:nth-child(6){ --i:5 } .orbit li:nth-child(7){ --i:6 } .orbit li:nth-child(8){ --i:7 }
-        .node { width: 72px; height: 72px; border-radius: 9999px; background: linear-gradient(180deg,#fff,#f8fafc); border:1px solid #e5e7eb; box-shadow:0 10px 34px rgba(11,61,53,.14); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; animation: spinRev 28s linear infinite; transform-origin:center; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
-        .node:hover { transform: scale(1.05); box-shadow: 0 12px 30px rgba(15,23,42,.12); border-color: #dbe3ef; }
-        .node .lbl { font-size: 12px; font-weight: 600; color: #0b3d35; }
-        .node .sub { font-size: 10px; color: #5b6b66; }
+        .orbit li { --n:8; --i:0; --r:140px; position:absolute; left:50%; top:50%; width:60px; height:60px; margin:-30px; display:flex; align-items:center; justify-content:center; transform: rotate(calc(360deg/var(--n)*var(--i))) translate(var(--r)) rotate(calc(-360deg/var(--n)*var(--i))); }
+        .orbit li:nth-child(1){ --i:0 } .orbit li:nth-child(2){ --i:1 } .orbit li:nth-child(3){ --i:2 } .orbit li:nth-child(4){ --i:3 } .orbit li:nth-child(5){ --i:4 } .orbit li:nth-child(6){ --i:5 } .orbit li:nth-child(7){ --i:6 } .orbit li:nth-child(8){ --i:7 }
+        .node { width:50px; height:50px; border-radius:50%; background:linear-gradient(180deg,#fff,#f8fafc); border:1px solid #e5e7eb; box-shadow:0 10px 34px rgba(11,61,53,.14); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; animation: spinRev 28s linear infinite; transform-origin:center; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; font-size:10px; }
+        .node:hover { transform:scale(1.05); box-shadow:0 12px 30px rgba(15,23,42,.12); border-color:#dbe3ef; }
+        .node .lbl { font-size:10px; font-weight:600; color:#0b3d35; }
+        .node .sub { font-size:8px; color:#5b6b66; }
         @keyframes spinRev { to { transform: rotate(-360deg); } }
-        @media (prefers-reduced-motion: reduce){ .orbit, .node{ animation:none } }
+        @media (prefers-reduced-motion: reduce) { .orbit, .node { animation:none; } }
     </style>
 </head>
 <body>
 
-<section class="stage" aria-label="GDMT services orbit">
-    <div class="center" aria-hidden="true">
-        <img src="https://images.squarespace-cdn.com/content/v1/68e6d86b1232a756b27dbef9/9da7b8f9-e488-4d97-b767-c4bd59381b46/GDMT_Logo.png" alt="GDMT logo"/>
+<section id="orbit" class="py-16 sm:py-20 bg-[#FEFAF6]">
+    <div class="container grid md:grid-cols-2 gap-10 items-center">
+        <div class="w-full flex justify-center">
+            <div class="stage" style="width:400px; height:400px;">
+                <div class="center" style="width:120px; height:120px;">
+                    <img src="https://images.squarespace-cdn.com/content/v1/68e6d86b1232a756b27dbef9/9da7b8f9-e488-4d97-b767-c4bd59381b46/GDMT_Logo.png" alt="GDMT logo"/>
+                </div>
+                <div class="guide-ring" style="width:280px; height:280px;"></div>
+                <ul class="orbit">
+                    <li><div class="node" tabindex="0"><i class="bi bi-receipt text-brand-800 text-[14px]"></i><div class="lbl">Tax Prep</div><div class="sub">e‑file</div></div></li>
+                    <li><div class="node" tabindex="0"><i class="bi bi-calculator text-brand-800 text-[14px]"></i><div class="lbl">Books</div><div class="sub">P&L</div></div></li>
+                    <li><div class="node" tabindex="0"><i class="bi bi-shield-check text-brand-800 text-[14px]"></i><div class="lbl">Insurance</div><div class="sub">BOP</div></div></li>
+                    <li><div class="node" tabindex="0"><i class="bi bi-building text-brand-800 text-[14px]"></i><div class="lbl">Entities</div><div class="sub">LLC</div></div></li>
+                    <li><div class="node" tabindex="0"><i class="bi bi-graph-up text-brand-800 text-[14px]"></i><div class="lbl">Planning</div><div class="sub">Strategy</div></div></li>
+                    <li><div class="node" tabindex="0"><i class="bi bi-cloud-upload text-brand-800 text-[14px]"></i><div class="lbl">Portal</div><div class="sub">Uploads</div></div></li>
+                    <li><div class="node" tabindex="0"><i class="bi bi-file-earmark-lock text-brand-800 text-[14px]"></i><div class="lbl">Audit</div><div class="sub">Notices</div></div></li>
+                    <li><div class="node" tabindex="0"><i class="bi bi-briefcase text-brand-800 text-[14px]"></i><div class="lbl">Advisory</div><div class="sub">R.E.</div></div></li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="guide-ring" aria-hidden="true"></div>
-    <ul class="orbit" aria-live="off">
-        <li><div class="node" tabindex="0" aria-label="Tax Prep, e‑file"><i class="bi bi-receipt text-brand-800 text-[18px]"></i><div class="lbl">Tax Prep</div><div class="sub">e‑file</div></div></li>
-        <li><div class="node" tabindex="0" aria-label="Bookkeeping, P&L"><i class="bi bi-calculator text-brand-800 text-[18px]"></i><div class="lbl">Books</div><div class="sub">P&L</div></div></li>
-        <li><div class="node" tabindex="0" aria-label="Insurance, BOP"><i class="bi bi-shield-check text-brand-800 text-[18px]"></i><div class="lbl">Insurance</div><div class="sub">BOP</div></div></li>
-        <li><div class="node" tabindex="0" aria-label="Entity, LLC/S‑Corp"><i class="bi bi-building text-brand-800 text-[18px]"></i><div class="lbl">Entities</div><div class="sub">LLC</div></div></li>
-        <li><div class="node" tabindex="0" aria-label="Tax Planning, strategy"><i class="bi bi-graph-up text-brand-800 text-[18px]"></i><div class="lbl">Planning</div><div class="sub">Strategy</div></div></li>
-        <li><div class="node" tabindex="0" aria-label="Secure portal, uploads"><i class="bi bi-cloud-upload text-brand-800 text-[18px]"></i><div class="lbl">Portal</div><div class="sub">Uploads</div></div></li>
-        <li><div class="node" tabindex="0" aria-label="Audit, notices"><i class="bi bi-file-earmark-lock text-brand-800 text-[18px]"></i><div class="lbl">Audit</div><div class="sub">Notices</div></div></li>
-        <li><div class="node" tabindex="0" aria-label="Advisory, real estate"><i class="bi bi-briefcase text-brand-800 text-[18px]"></i><div class="lbl">Advisory</div><div class="sub">R.E.</div></div></li>
-    </ul>
 </section>
+
 
 </body>
 </html>
